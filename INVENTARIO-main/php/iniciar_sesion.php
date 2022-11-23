@@ -1,7 +1,7 @@
 <?php
 	/*== Almacenando datos ==*/
-    $usuario=limpiar_cadena($_POST['login_usuario']);
-    $clave=limpiar_cadena($_POST['login_clave']);
+    $usuario=limpiar_cadena($_POST['usuario_usuario']);
+    $clave=limpiar_cadena($_POST['usuario_clave']);
 
 
     /*== Verificando campos obligatorios ==*/
