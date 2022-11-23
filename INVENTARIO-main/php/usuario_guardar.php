@@ -1,5 +1,5 @@
 <?php
-    
+
     require_once "main.php";
 
     /*== Almacenando datos ==*/
@@ -90,7 +90,7 @@
                 </div>
             ';
             exit();
-        } 
+        }
     }
 
 
