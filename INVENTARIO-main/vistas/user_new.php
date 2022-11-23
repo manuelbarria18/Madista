@@ -39,7 +39,7 @@
 		  	<div class="column">
 		    	<div class="control">
 					<label>Clave</label>
-				  	<input class="input" type="password" name="usuario_clave_1" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required >
+				  	<input class="input" type="password" name="usuario_clave-_1" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required >
 				</div>
 		  	</div>
 		  	<div class="column">
