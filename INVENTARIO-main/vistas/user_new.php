@@ -50,7 +50,7 @@
 		  	</div>
 		</div>
 		<p class="has-text-centered">
-			<button type="submit" class="button is-info is-rounded">Guardar</button>
+			<button type="submit" style='width:70px; height:25px'class="button is-info is-rounded">Guardar</button>
 		</p>
 	</form>
 </div>

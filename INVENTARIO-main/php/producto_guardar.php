@@ -7,8 +7,7 @@
 	  $codigo=limpiar_cadena($_POST['producto_id']);
 	 $nombre=limpiar_cadena($_POST['producto_nombre']);
     $categoria=limpiar_cadena($_POST['categoria_id']);
-	 $usuario=limpiar_cadena($_POST['usuario_id']);
-	  $detalle=limpiar_cadena($_POST['producto_detalle']);
+	 $detalle=limpiar_cadena($_POST['producto_detalle']);
 	 $color=limpiar_cadena($_POST['producto_color']);
     $tamaño=limpiar_cadena($_POST['producto_tamaño']);
    $material=limpiar_cadena($_POST['producto_material']);
@@ -19,7 +18,7 @@
     $preciov=limpiar_cadena($_POST['producto_precio']);
 
 	/*== Verificando campos obligatorios ==*/
-    if($codigo=="" || $nombre=="" || $categoria=="" || $detalle=="" || $color=="" || $tamaño=="" || $material=="" || $Cantidad=="" || $fecha_ing=="" || $preciocun=="" || $proveedor=="" || $preciov=="" )
+    if($codigo=="" || $nombre=="" || $categoria=="" || $detalle=="" || $color=="" || $tamaño=="" || $material=="" || $cantidad=="" || $fecha_ing=="" || $preciocun=="" || $proveedor=="" || $preciov=="")
 
     {
         echo '
@@ -33,7 +32,7 @@
 
 
     /*== Verificando integridad de los datos ==*/
-   if(verificar_datos("[a-zA-Z0-9- ]{1,70}",$codigo))
+   if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/  ]{1,70}",$codigo))
     {
         echo '
             <div class="notification is-danger is-light">
@@ -55,7 +54,7 @@
         exit();
     }
 
-    if(verificar_datos("[a-zA-Z0-9- ]{1,20}",$categoria))
+    if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,30}",$categoria))
     {
         echo '
             <div class="notification is-danger is-light">
@@ -110,7 +109,7 @@
         exit();
     }
 
-    if(verificar_datos("[0-9- ]{1,10}",$Cantidad))
+    if(verificar_datos("[0-9- ]{1,10}",$cantidad))
     {
         echo '
             <div class="notification is-danger is-light">
@@ -137,18 +136,18 @@
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                El PRECIO no coincide con el formato solicitado
+                El precio no coincide con el formato solicitado
             </div>
         ';
         exit();
     }
 
-    if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/]{1,50}",$proveedor))
+    if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,30}",$proveedor))
     {
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                Los caracteres no coincide con el formato solicitado
+                Los caracteres en proveedor no coincide con el formato solicitado
             </div>
         ';
         exit();
@@ -166,8 +165,8 @@
 
 
     /*== Verificando codigo ==*/
-    $check_codigo=conexion();
-    $check_codigo=$check_codigo->query("SELECT producto_codigo FROM producto WHERE producto_codigo='$codigo'");
+   $check_codigo=conexion();
+    $check_codigo=$check_codigo->query("SELECT producto_id FROM productos WHERE producto_id='$codigo'");
     if($check_codigo->rowCount()>0){
         echo '
             <div class="notification is-danger is-light">
@@ -181,8 +180,8 @@
 
 
     /*== Verificando nombre ==*/
-    $check_nombre=conexion();
-    $check_nombre=$check_nombre->query("SELECT producto_nombre FROM producto WHERE producto_nombre='$nombre'");
+   $check_nombre=conexion();
+    $check_nombre=$check_nombre->query("SELECT producto_nombre FROM productos WHERE producto_nombre='$nombre'");
     if($check_nombre->rowCount()>0){
         echo '
             <div class="notification is-danger is-light">
@@ -197,7 +196,7 @@
 
     /*== Verificando categoria ==*/
     $check_categoria=conexion();
-    $check_categoria=$check_categoria->query("SELECT categoria_id FROM categoria WHERE categoria_id='$categoria'");
+    $check_categoria=$check_categoria->query("SELECT categoria_nombre FROM categoria WHERE categoria_nombre='$categoria'");
     if($check_categoria->rowCount()<=0){
         echo '
             <div class="notification is-danger is-light">
@@ -209,15 +208,15 @@
     }
     $check_categoria=null;
 
-
-    /* Directorios de imagenes */
+/*
+    /* Directorios de imagenes
 	$img_dir='../img/producto/';
 
 
-	/*== Comprobando si se ha seleccionado una imagen ==*/
+	/*== Comprobando si se ha seleccionado una imagen ==
 	if($_FILES['producto_foto']['name']!="" && $_FILES['producto_foto']['size']>0){
 
-        /* Creando directorio de imagenes */
+        /* Creando directorio de imagenes
         if(!file_exists($img_dir)){
             if(!mkdir($img_dir,0777)){
                 echo '
@@ -230,7 +229,7 @@
             }
         }
 
-		/* Comprobando formato de las imagenes */
+		/* Comprobando formato de las imagenes
 		if(mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/jpeg" && mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/png"){
 			echo '
 	            <div class="notification is-danger is-light">
@@ -242,7 +241,7 @@
 		}
 
 
-		/* Comprobando que la imagen no supere el peso permitido */
+		/* Comprobando que la imagen no supere el peso permitido
 		if(($_FILES['producto_foto']['size']/1024)>3072){
 			echo '
 	            <div class="notification is-danger is-light">
@@ -254,7 +253,7 @@
 		}
 
 
-		/* extencion de las imagenes */
+		/* extencion de las imagenes
 		switch(mime_content_type($_FILES['producto_foto']['tmp_name'])){
 			case 'image/jpeg':
 			  $img_ext=".jpg";
@@ -264,16 +263,16 @@
 			break;
 		}
 
-		/* Cambiando permisos al directorio */
+		/* Cambiando permisos al directorio
 		chmod($img_dir, 0777);
 
-		/* Nombre de la imagen */
+		/* Nombre de la imagen
 		$img_nombre=renombrar_fotos($nombre);
 
-		/* Nombre final de la imagen */
+		/* Nombre final de la imagen
 		$foto=$img_nombre.$img_ext;
-
-		/* Moviendo imagen al directorio */
+*/
+		/* Moviendo imagen al directorio
 		if(!move_uploaded_file($_FILES['producto_foto']['tmp_name'], $img_dir.$foto)){
 			echo '
 	            <div class="notification is-danger is-light">
@@ -284,31 +283,28 @@
 			exit();
 		}
 
-	}else{
+	else{
 		$foto="";
 	}
-
+*/
 
 	/*== Guardando datos ==*/
     $guardar_producto=conexion();
-    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_id,producto_nombre,categoria_id,producto_detalles,producto_color,producto_tamaño,producto_material,producto_cantidad,fecha_de_ingreso,precio_compra_unidad,producto_proveedor,producto_precio,producto_foto) VALUES(id,nombre,categoria,detalles,color,tamaño,material,cantidad,fecha,preciocu,proveedor,precio,foto,)");
+    $guardar_producto=$guardar_producto->prepare("INSERT INTO productos(producto_id,producto_nombre,categoria_nombre,producto_detalles,producto_color,producto_tamaño,producto_material,producto_cantidad,fecha_de_ingreso,precio_compra_unidad,producto_proveedor,producto_precio) VALUES(id,nombre,categoria,detalles,color,tamaño,material,cantidad,fecha,preciocu,proveedor,precio)");
 
     $marcadores=[
         ":id"=>$codigo,
         ":nombre"=>$nombre,
         ":categoria"=>$categoria,
-        ":usuario"=>$_SESSION['id'],
         ":detalles"=>$detalle,
         ":color"=>$color,
         ":tamaño"=>$tamaño,
         ":material"=>$material,
-        ":cantidad"=>$Cantidad,
+        ":cantidad"=>$cantidad,
         ":fecha"=>$fecha_ing,
         ":preciocu"=>$preciocun,
-        ":Proveedor"=>$proveedor,
-        ":precio"=>$preciov,
-        ":foto"=>$foto
-
+        ":proveedor"=>$proveedor,
+        ":precio"=>$preciov
 
     ];
 
@@ -323,11 +319,11 @@
         ';
     }else{
 
-    	if(is_file($img_dir.$foto)){
+    /*	if(is_file($img_dir.$foto)){
 			chmod($img_dir.$foto, 0777);
 			unlink($img_dir.$foto);
         }
-
+*/
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>

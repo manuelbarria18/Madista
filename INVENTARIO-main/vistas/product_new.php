@@ -15,7 +15,7 @@
 		  	<div class="column">
 		    	<div class="control">
 					<label>Codigo de producto</label>
-				  	<input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required >
+				  	<input class="input" type="text" name="producto_id" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/  ]{1,70}" maxlength="70" required >
 				</div>
 		  	</div>
 		  	<div class="column">
@@ -66,7 +66,7 @@
 		  	<div class="column">
 		    	<div class="control">
 					<label>Fecha de Ingreso</label>
-				  	<input class="input" type="text" name="	fecha_de_ingreso" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}" maxlength="70" required >
+				  	<input class="input" type="text" name="fecha_de_ingreso" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}" maxlength="70" required >
 				</div>
 		  	</div>
 		</div>
@@ -88,7 +88,7 @@
 		  	<div class="column">
 		    	<div class="control">
 					<label>Cantidad</label>
-				  	<input class="input" type="text" name="producto_Cantidad" pattern="[0-9]{1,25}" maxlength="25" required >
+				  	<input class="input" type="text" name="producto_cantidad" pattern="[0-9]{1,25}" maxlength="25" required >
 				</div>
 		  	</div>
 		  	<div class="column">
@@ -102,7 +102,7 @@
     						if($categorias->rowCount()>0){
     							$categorias=$categorias->fetchAll();
     							foreach($categorias as $row){
-    								echo '<option value="'.$row['categoria_nombre'].'" >'.$row['categoria_id'].'</option>';
+    								echo '<option value="'.$row['categoria_nombre'].'" >'.$row['categoria_nombre'].'</option>';
 				    			}
 				   			}
 				   			$categorias=null;
@@ -113,18 +113,7 @@
 		</div>
 		<div class="columns">
 			<div class="column">
-				<label>Foto o imagen del producto</label><br>
-				<div class="file is-small has-name">
-				  	<label class="file-label">
-				    	<input class="file-input" type="file" name="producto_foto" accept=".jpg, .png, .jpeg" >
-				    	<span class="file-cta">
-				      		<span class="file-label">Imagen</span>
-				    	</span>
-				    	<span class="file-name">JPG, JPEG, PNG. (MAX 3MB)</span>
-				  	</label>
-				</div>
-			</div>
-		</div>
+
 		<p class="has-text-centered">
 			<button type="submit" class="button is-info is-rounded">Guardar</button>
 		</p>
