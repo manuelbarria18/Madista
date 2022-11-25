@@ -94,7 +94,7 @@
 		  	<div class="column">
 				<label>Categoría</label><br>
 		    	<div class="select is-rounded">
-				  	<select name="categoria_id" >
+				  	<select name="categoria_nombre" >
 				    	<option value="" selected="" >Seleccione una opción</option>
 				    	<?php
     						$categorias=conexion();
